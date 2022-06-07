@@ -2,10 +2,12 @@
   "name": "vscode-twoslash-queries",
   "displayName": "vscode-twoslash-queries",
   "description": "Adds support for twoslash queries into typescript projects",
-  "version": "0.0.1",
+  "publisher": "Orta",
+  "version": "1.0.1",
   "engines": {
     "vscode": "^1.67.0"
-  },
+  },  
+  "icon": "icon.png",
   "categories": [
     "Other"
   ],
