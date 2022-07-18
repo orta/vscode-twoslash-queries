@@ -1,5 +1,15 @@
 import * as vscode from "vscode";
 
+const languages = [
+  'typescript',
+  'typescriptreact',
+  'javascript',
+  'javascriptreact',
+  'vue',
+  'svelte',
+  'astro',
+];
+
 export function activate(context: vscode.ExtensionContext) {
   const provider: vscode.InlayHintsProvider = {
     provideInlayHints: async (model, iRange, cancel) => {
@@ -65,7 +75,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.languages.registerInlayHintsProvider(
-      [{ language: "javascript" }, { language: "typescript" }, { language: "typescriptreact" }, { language: "javascriptreact" }],
+      languages.map(language => ({ language })),
       provider
     )
   );
