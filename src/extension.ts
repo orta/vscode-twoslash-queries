@@ -25,7 +25,7 @@ export function activate(context: vscode.ExtensionContext) {
           return [];
         }
 
-        const file = model.uri.path;
+        const file = model.uri.fsPath;
         const hint: any = await vscode.commands.executeCommand(
           "typescript.tsserverRequest",
           "quickinfo",
