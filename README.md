@@ -1,8 +1,10 @@
-# vscode-twoslash-queries 
+# vscode-twoslash-queries
 
-A tiny (75LOC) extension for VS Code that lets you use `// ^?` inside your editor to inline highlight types. Re-uses the existing TypeScript tooling infra in `*.ts`, `*.tsx`, `*.js`, and `*.jsx` files, simply adding inline info. 
+A tiny (75LOC) extension for VS Code that lets you use `// ^?` inside your editor to inline highlight types. Re-uses the existing TypeScript tooling infra in `*.ts`, `*.tsx`, `*.js`, and `*.jsx` files, simply adding inline info.
 
 Useful for keyboard warriors or folks working on complex types and want to see how changes propagate throughout other types.
+
+**Ensure that inlay hints are enabled in your VS Code settings.**
 
 ## Features
 
