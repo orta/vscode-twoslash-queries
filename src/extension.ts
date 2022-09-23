@@ -25,13 +25,13 @@ export function activate(context: vscode.ExtensionContext) {
           return [];
         }
 
-        const file = model.uri.fsPath;
+        const { scheme, fsPath, authority, path } = model.uri;
         const hint: any = await vscode.commands.executeCommand(
           "typescript.tsserverRequest",
           "quickinfo",
           {
             _: "%%%",
-            file,
+            file: scheme === 'file' ? fsPath : `^/${scheme}/${authority || 'ts-nul-authority'}/${path.replace(/^\//, '')}`,
             line: inspectionPos.line + 1,
             offset: inspectionPos.character,
           }
