@@ -6,7 +6,7 @@
   "version": "1.0.2",
   "engines": {
     "vscode": "^1.67.0"
-  },  
+  },
   "icon": "icon.png",
   "categories": [
     "Other"
@@ -23,6 +23,7 @@
     "url": "https://github.com/orta/vscode-twoslash-queries"
   },
   "main": "./out/extension.js",
+  "browser": "./out/extension.js",
   "scripts": {
     "vscode:prepublish": "yarn run compile",
     "compile": "tsc -p ./",
