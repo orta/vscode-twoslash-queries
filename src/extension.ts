@@ -43,9 +43,8 @@ export function activate(context: vscode.ExtensionContext) {
 
         // Make a one-liner
         let text = hint.body.displayString
-          .replace(/\\n/g, " ")
           .replace(/\/n/g, " ")
-          .replace(/  /g, " ")
+          .replace(/\n */g, "␊")
           .replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
         if (text.length > 120) {
           text = text.slice(0, 119) + "...";
