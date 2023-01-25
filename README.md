@@ -10,6 +10,8 @@ Useful for keyboard warriors or folks working on complex types and want to see h
 
 You write `// ^?` anywhere in a source file (with whitespace before, between and middle being whatever) all that matters is the alignment of the `^`.
 
+Alternatively, you can use the `"TwoSlash Query: Insert Below"` command from the Command Palette or assign a keyboard shortcut to it (default: `Ctrl+K 6` on Windows, `Cmd+K 6` on Mac).
+
 You can see here it in use a few times:
 
 <img src="./vscode-twoslash.png" />
