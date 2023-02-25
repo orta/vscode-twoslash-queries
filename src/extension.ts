@@ -42,19 +42,31 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         // Make a one-liner
-        let text = hint.body.displayString
+        let value = hint.body.displayString
           .replace(/\\n/g, " ")
           .replace(/\/n/g, " ")
           .replace(/  /g, " ")
           .replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
-        if (text.length > 120) {
-          text = text.slice(0, 119) + "...";
+        if (value.length > 120) {
+          value = value.slice(0, 119) + "...";
         }
+
+        const command: vscode.Command = {
+          title: 'Copy',
+          command: 'extension.vscode-twoslash-queries.copy',
+          arguments: [{value}]
+        };
+
+        const inlayLabel: vscode.InlayHintLabelPart = {
+          value,
+          tooltip: 'Execute command to copy output',
+          command
+        };
 
         const inlay: vscode.InlayHint = {
           kind: 0,
           position: new vscode.Position(endPos.line, endPos.character + 1),
-          label: text,
+          label: [inlayLabel],
           paddingLeft: true,
         };
         results.push(inlay);
@@ -67,6 +79,13 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.languages.registerInlayHintsProvider(
       [{ language: "javascript" }, { language: "typescript" }, { language: "typescriptreact" }, { language: "javascriptreact" }],
       provider
+    )
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      'extension.vscode-twoslash-queries.copy', 
+      args => vscode.env.clipboard.writeText(args.value).then(v => v, v => null)
     )
   );
 }
