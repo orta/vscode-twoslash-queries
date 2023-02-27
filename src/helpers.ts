@@ -38,7 +38,7 @@ export function createInlayHint({ hint, position, lineLength = 0 }: InlayHintInf
     .replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
   
   // Cut off hint if too long
-  // If vscode #174159 lands, can change to check that (https://github.com/microsoft/vscode/issues/174159)
+  // If microsoft/vscode#174159 lands, can change to check that
   const availableSpace = 120 - lineLength;
   if (text.length > availableSpace) {
     text = text.slice(0, availableSpace - 1) + "...";
