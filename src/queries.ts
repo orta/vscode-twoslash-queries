@@ -77,7 +77,7 @@ async function checkInlineQuery({ text, offset, model, cancel }: Query): InlayHi
     const endIndex = line.lastIndexOf(querySymbol) + 2;
     const endPos = model.positionAt(endIndex + offset + match.index);
 
-    const hint = await getLeftMostHintOfLine({model, position: startPos, lineLength: endIndex - startIndex - 2});
+    const hint = await getLeftMostHintOfLine({ model, position: startPos, lineLength: endIndex - startIndex - 2 });
     const inlayHint = createInlayHint({ hint, position: endPos, lineLength: line.length });
     
     if(inlayHint) {
