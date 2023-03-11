@@ -11,6 +11,30 @@
   "categories": [
     "Other"
   ],
+  "contributes": {
+    "snippets": [
+      {
+        "language": "javascript",
+        "path": "./snippets.json"
+      },
+      {
+        "language": "javascriptreact",
+        "path": "./snippets.json"
+      },
+      {
+        "language": "typescript",
+        "path": "./snippets.json"
+      },
+      {
+        "language": "typescriptreact",
+        "path": "./snippets.json"
+      },
+      {
+        "language": "jsx-tags",
+        "path": "./snippets.json"
+      }
+    ]
+  },
   "activationEvents": [
     "onLanguage:javascript",
     "onLanguage:javascriptreact",

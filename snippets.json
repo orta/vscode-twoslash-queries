@@ -1,0 +1,7 @@
+{
+  "twoslash": {
+    "prefix": "twoslash",
+    "body": ["//    ^?"],
+    "description": "twoslash query"
+  }
+}
