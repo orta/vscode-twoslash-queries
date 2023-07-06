@@ -7,7 +7,7 @@ export function activate(context: vscode.ExtensionContext) {
       const text = model.getText(iRange);
       const results: vscode.InlayHint[] = [];
 
-      const m = text.matchAll(/^\s*\/\/\s*\^\?/gm);
+      const m = text.matchAll(/^\s*\/\/\.?\s*\^\?/gm);
       for (const match of m) {
         if (match.index === undefined) {
           return;
