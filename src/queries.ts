@@ -14,7 +14,8 @@ type RegExpGroups<T extends string> = (
   }[]
 );
 
-const twoslashQueryRegex = /^\s*\/\/\s*\^\?/gm; // symbol: ^?
+
+const twoslashQueryRegex = /^\s*\/\/\.?\s*\^\?/gm; // symbol: ^?
 const inlineQueryRegex = /^[^\S\r\n]*(?<start>\S).*\/\/\s*(?<end>=>)/gm; // symbol: =>
 type InlineQueryMatches = RegExpGroups<"start" | "end">;
 
