@@ -44,5 +44,26 @@
     "mocha": "^9.2.1",
     "typescript": "^4.5.5",
     "@vscode/test-electron": "^2.1.2"
+  },
+  "contributes": {
+    "commands": [{
+      "command": "orta.vscode-twoslash-queries.insert-twoslash-query",
+      "title": "TwoSlash Query: Insert Below"
+    }],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "orta.vscode-twoslash-queries.insert-twoslash-query",
+          "when": "editorLangId == typescript || editorLangId == typescriptreact || editorLangId == javascript || editorLangId == javascriptreact"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "orta.vscode-twoslash-queries.insert-twoslash-query",
+        "key": "ctrl+k 6",
+        "mac": "cmd+k 6"
+      }
+    ]
   }
 }
