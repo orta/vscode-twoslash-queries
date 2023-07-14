@@ -3,7 +3,7 @@
   "displayName": "Twoslash Query Comments",
   "description": "Adds support for twoslash query comments (// ^?) in TypeScript and JavaScript projects",
   "publisher": "Orta",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "engines": {
     "vscode": "^1.67.0"
   },

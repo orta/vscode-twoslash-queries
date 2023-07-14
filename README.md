@@ -20,3 +20,8 @@ You can see here it in use a few times:
 ## Debugging
 
 **Ensure that inlay hints are enabled in your VS Code settings.**
+
+
+## Deployment
+
+Deploys happen overnight from merged PRs. If it's been a while, the token for vscode marketplace may need an update from https://dev.azure.com/ortatherox/_usersSettings/tokens
