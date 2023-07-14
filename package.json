@@ -61,6 +61,7 @@
     "keybindings": [
       {
         "command": "orta.vscode-twoslash-queries.insert-twoslash-query",
+        "when": "editorTextFocus",
         "key": "ctrl+k 6",
         "mac": "cmd+k 6"
       }
