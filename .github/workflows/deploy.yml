@@ -19,7 +19,7 @@ jobs:
           registry-url: "https://registry.npmjs.org"
 
       - run: "yarn install"
-      - run: "yarn build"
+      - run: "yarn compile"
 
       # Shipit
       - uses: orta/monorepo-deploy-nightly@master
