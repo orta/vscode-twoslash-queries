@@ -10,9 +10,8 @@ export async function quickInfoRequest(model: Model, position: vscode.Position) 
     "typescript.tsserverRequest",
     "quickinfo",
     {
-      _: "%%%",
       file: scheme === 'file' ? fsPath : `^/${scheme}/${authority || 'ts-nul-authority'}/${path.replace(/^\//, '')}`,
-      line: position.line,
+      line: position.line + 1,
       offset: position.character,
     }
   ) as any as QuickInfoResponse | undefined;
