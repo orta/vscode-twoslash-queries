@@ -1,20 +1,20 @@
 import * as vscode from "vscode";
-import type { QuickInfoResponse } from "typescript/lib/protocol";
+import type { FileLocationRequestArgs, QuickInfoResponse } from "typescript/lib/protocol";
 
 export type Model = vscode.TextDocument;
 
 /** Leverages the `tsserver` protocol to try to get the type info at the given `position`. */
 export async function quickInfoRequest(model: Model, position: vscode.Position) {
   const { scheme, fsPath, authority, path } = model.uri;
-  return await vscode.commands.executeCommand(
+  return await vscode.commands.executeCommand<QuickInfoResponse | undefined>(
     "typescript.tsserverRequest",
     "quickinfo",
     {
       file: scheme === 'file' ? fsPath : `^/${scheme}/${authority || 'ts-nul-authority'}/${path.replace(/^\//, '')}`,
       line: position.line + 1,
       offset: position.character,
-    }
-  ) as any as QuickInfoResponse | undefined;
+    } satisfies FileLocationRequestArgs
+  );
 }
 
 type InlayHintInfo = {
