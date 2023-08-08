@@ -45,7 +45,7 @@ export function createInlayHint({ hint, position, lineLength = 0 }: InlayHintInf
   }
 
   return {
-    kind: 0,
+    kind: vscode.InlayHintKind.Type,
     position: position.translate(0, 1),
     label: text,
     paddingLeft: true,
