@@ -38,7 +38,10 @@ export function createInlayHint({ hint, position, lineLength = 0 }: InlayHintInf
   
   // Cut off hint if too long
   // If microsoft/vscode#174159 lands, can change to check that
-  const availableSpace = 120 - lineLength;
+  const availableSpace =
+    vscode.workspace
+      .getConfiguration("orta.vscode-twoslash-queries")
+      .get<number>("maxLength", 120) - lineLength;
   if (text.length > availableSpace) {
     text = text.slice(0, availableSpace - 1) + "...";
   }

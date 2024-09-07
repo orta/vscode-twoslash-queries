@@ -46,6 +46,16 @@
     "@vscode/test-electron": "^2.1.2"
   },
   "contributes": {
+    "configuration": {
+      "title": "Twoslash Query Comments",
+      "properties": {
+        "orta.vscode-twoslash-queries.maxLength": {
+          "type": "number",
+          "default": 120,
+          "description": "Optionally set a maximum length for the hints to display."
+        }
+      }
+    },
     "commands": [{
       "command": "orta.vscode-twoslash-queries.insert-twoslash-query",
       "title": "TwoSlash Query: Insert Below"
