@@ -14,10 +14,15 @@ type RegExpGroups<T extends string> = (
   }[]
 );
 
+const strictEndEnabled = vscode.workspace
+  .getConfiguration("orta.vscode-twoslash-queries")
+  .get<boolean>("enableStrictEnd", false);
 
-const twoslashQueryRegex = /^\s*\/\/\.?\s*\^\?/gm; // symbol: ^?
+const twoslashQueryRegex = strictEndEnabled ? /^\s*\/\/\.?\s*\^\?$/gm: /^\s*\/\/\.?\s*\^\?/gm; // symbol: ^?
 // https://regex101.com/r/6Jb8h2/1
-const inlineQueryRegex = /^[^\S\r\n]*(?<start>\S).*\/\/\s*(?<end>=>)/gm; // symbol: =>
+const inlineQueryRegex = strictEndEnabled
+  ? /^[^\S\r\n]*(?<start>\S).*\/\/\s*(?<end>=>)$/gm
+  : /^[^\S\r\n]*(?<start>\S).*\/\/\s*(?<end>=>)/gm; // symbol: =>
 type InlineQueryMatches = RegExpGroups<"start" | "end">;
 
 type Query = {

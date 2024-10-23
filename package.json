@@ -53,6 +53,11 @@
           "type": "number",
           "default": 120,
           "description": "Optionally set a maximum length for the hints to display."
+        },
+        "orta.vscode-twoslash-queries.enableStrictEnd": {
+          "type": "boolean",
+          "default": false,
+          "description": "If enabled, type hints are shown only for queries that strictly end with '// ^?'."
         }
       }
     },
