@@ -62,7 +62,7 @@
         "title": "TwoSlash Query: Insert Below"
       },
       {
-        "command": "orta.vscode-twoslash-queries.insert-inline-twoslash-query",
+        "command": "orta.vscode-twoslash-queries.insert-inline-query",
         "title": "Inline TwoSlash Query: Insert EOL"
       }
     ],
@@ -73,7 +73,7 @@
           "when": "editorLangId == typescript || editorLangId == typescriptreact || editorLangId == javascript || editorLangId == javascriptreact"
         },
         {
-          "command": "orta.vscode-twoslash-queries.insert-inline-twoslash-query",
+          "command": "orta.vscode-twoslash-queries.insert-inline-query",
           "when": "editorLangId == typescript || editorLangId == typescriptreact || editorLangId == javascript || editorLangId == javascriptreact"
         }
       ]
@@ -86,7 +86,7 @@
         "mac": "cmd+k 6"
       },
       {
-        "command": "orta.vscode-twoslash-queries.insert-inline-twoslash-query",
+        "command": "orta.vscode-twoslash-queries.insert-inline-query",
         "when": "editorTextFocus",
         "key": "ctrl+k 7",
         "mac": "cmd+k 7"

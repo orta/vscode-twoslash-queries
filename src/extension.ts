@@ -4,7 +4,7 @@ import { getHintsFromQueries } from "./queries";
 export function activate(context: vscode.ExtensionContext) {
   registerInlayHintsProvider(context);
   registerInsertTwoSlashQueryCommand(context);
-  registerInsertInlineTwoSlashQueryCommand(context);
+  registerInsertInlineQueryCommand(context);
 }
 
 export function deactivate() {}
@@ -43,16 +43,17 @@ function registerInsertTwoSlashQueryCommand(context: vscode.ExtensionContext) {
   );
 }
 
-function registerInsertInlineTwoSlashQueryCommand(context: vscode.ExtensionContext) {
+function registerInsertInlineQueryCommand(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerTextEditorCommand(
-      'orta.vscode-twoslash-queries.insert-inline-twoslash-query',
+      'orta.vscode-twoslash-queries.insert-inline-query',
       (textEditor: vscode.TextEditor) => {
         const { document, selection: { end } } = textEditor;
         const eolRange = document.lineAt(end.line).range.end;
         const comment = ' // =>';
 
         textEditor.edit(editBuilder => editBuilder.insert(eolRange, comment));
-      })
+      }
+    )
   );
 }
