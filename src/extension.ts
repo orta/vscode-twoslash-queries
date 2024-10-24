@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { getHintsFromQueries } from "./queries";
+import { getPositionOfLeftMostHintOfLine } from "./helpers";
 
 export function activate(context: vscode.ExtensionContext) {
   registerInlayHintsProvider(context);
@@ -29,15 +30,29 @@ function registerInsertTwoSlashQueryCommand(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerTextEditorCommand(
       'orta.vscode-twoslash-queries.insert-twoslash-query',
-      (textEditor: vscode.TextEditor) => {
-        const { document, selection: { end, active } } = textEditor;
-        const eolRange = document.lineAt(end.line).range.end;
-        const comment = '//'.padEnd(active.character, ' ').concat('^?');
+      async (textEditor: vscode.TextEditor) => {
+        const { document, selection: { active } } = textEditor;
+        const eolRange = document.lineAt(active.line).range.end;
+        const isLineEmpty = document.lineAt(active.line).isEmptyOrWhitespace;
+        
+        let comment: string;
+        if (isLineEmpty) {
+          const prevLine = document.lineAt(active.line - 1);
+          const position = await getPositionOfLeftMostHintOfLine({
+            model: document,
+            position: prevLine.range.start,
+            lineLength: prevLine.text.length,
+          });
+          comment = '//'.padEnd(position !== undefined ? position - 1 : active.character, ' ').concat('^?');
+        } else {
+          comment = '//'.padEnd(active.character, ' ').concat('^?');
+        }
 
         textEditor.edit(editBuilder => {
-          const eolChar = document.eol === vscode.EndOfLine.LF ? '\n' : '\r\n';
+          const eolChar = isLineEmpty ? '' : document.eol === vscode.EndOfLine.LF ? '\n' : '\r\n';
           editBuilder.insert(eolRange, eolChar + comment);
         });
-      })
+      }
+    )
   );
 }

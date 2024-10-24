@@ -74,3 +74,16 @@ export async function getLeftMostHintOfLine({ model, position, lineLength }: Lin
     return hint;
   }
 }
+
+/** Gets the position of the first `QuickInfo` response in a given line, if available. */
+export async function getPositionOfLeftMostHintOfLine({ model, position, lineLength }: LineInfo) {
+  for (const i of range(lineLength)) {
+    const hint = await quickInfoRequest(model, position.translate(0, i));
+  
+    if (!hint?.body) {
+      continue;
+    }
+
+    return i;
+  }
+}
