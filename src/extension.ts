@@ -20,7 +20,7 @@ function registerInlayHintsProvider(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.languages.registerInlayHintsProvider(
-      [{ language: "javascript" }, { language: "typescript" }, { language: "typescriptreact" }, { language: "javascriptreact" }],
+      [{ language: "javascript" }, { language: "typescript" }, { language: "typescriptreact" }, { language: "javascriptreact" }, {language: "vue"}],
       provider
     )
   );
