@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { getHintsFromQueries } from "./queries";
-import { getPositionOfLeftMostHintOfLine } from "./helpers";
+import { getLeftMostHintOfLine } from "./helpers";
 
 export function activate(context: vscode.ExtensionContext) {
   registerInlayHintsProvider(context);
@@ -32,24 +32,27 @@ function registerInsertTwoSlashQueryCommand(context: vscode.ExtensionContext) {
       'orta.vscode-twoslash-queries.insert-twoslash-query',
       async (textEditor: vscode.TextEditor) => {
         const { document, selection: { active } } = textEditor;
-        const eolRange = document.lineAt(active.line).range.end;
-        const isLineEmpty = document.lineAt(active.line).isEmptyOrWhitespace;
+        const currLine = document.lineAt(active.line);
         
-        let comment: string;
-        if (isLineEmpty) {
+        let padding = active.character;
+        let eolRange = currLine.range.end;
+        if (currLine.isEmptyOrWhitespace) {
           const prevLine = document.lineAt(active.line - 1);
-          const position = await getPositionOfLeftMostHintOfLine({
+          const hint = await getLeftMostHintOfLine({
             model: document,
             position: prevLine.range.start,
-            lineLength: prevLine.text.length,
+            lineLength: prevLine.text.length + 1,
           });
-          comment = '//'.padEnd(position !== undefined ? position - 1 : active.character, ' ').concat('^?');
-        } else {
-          comment = '//'.padEnd(active.character, ' ').concat('^?');
+          const position = hint?.body?.start.offset;
+          if (position) {
+            padding = position - 1;
+            eolRange = prevLine.range.end;
+          }
         }
+        const comment = '//'.padEnd(padding, ' ').concat('^?');
 
         textEditor.edit(editBuilder => {
-          const eolChar = isLineEmpty ? '' : document.eol === vscode.EndOfLine.LF ? '\n' : '\r\n';
+          const eolChar = document.eol === vscode.EndOfLine.LF ? '\n' : '\r\n';
           editBuilder.insert(eolRange, eolChar + comment);
         });
       }
