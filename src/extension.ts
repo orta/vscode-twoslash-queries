@@ -49,7 +49,7 @@ function registerInsertTwoSlashQueryCommand(context: vscode.ExtensionContext) {
             eolRange = prevLine.range.end;
           }
         }
-        const comment = '//'.padEnd(padding, ' ').concat('^?');
+        const comment = '//'.padStart(currLine.firstNonWhitespaceCharacterIndex + 2).padEnd(padding, ' ').concat('^?');
 
         textEditor.edit(editBuilder => {
           const eolChar = document.eol === vscode.EndOfLine.LF ? '\n' : '\r\n';
