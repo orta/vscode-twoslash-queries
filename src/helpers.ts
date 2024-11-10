@@ -31,7 +31,7 @@ export function createInlayHint({ hint, position, lineLength = 0 }: InlayHintInf
   
   // Make a one-liner
   let text = hint.body.displayString
-    .replace(/\n\s*/g, " ");
+    .replace(/\r?\n\s*/g, " ");
   
   // Cut off hint if too long
   // If microsoft/vscode#174159 lands, can change to check that
