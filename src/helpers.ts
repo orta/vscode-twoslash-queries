@@ -31,9 +31,7 @@ export function createInlayHint({ hint, position, lineLength = 0 }: InlayHintInf
   
   // Make a one-liner
   let text = hint.body.displayString
-    .replace(/\\n/g, " ")
-    .replace(/\/n/g, " ")
-    .replace(/  /g, " ")
+    .replace(/\n\s*/g, " ")
     .replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
   
   // Cut off hint if too long
