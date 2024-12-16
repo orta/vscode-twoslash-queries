@@ -16,7 +16,8 @@
     "onLanguage:javascriptreact",
     "onLanguage:typescript",
     "onLanguage:typescriptreact",
-    "onLanguage:jsx-tags"
+    "onLanguage:jsx-tags",
+    "onLanguage:vue"
   ],
   "repository": {
     "type": "git",
