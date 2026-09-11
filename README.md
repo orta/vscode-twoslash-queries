@@ -2,6 +2,8 @@
 
 A tiny extension for VS Code that lets you use `// ^?` inside your editor to inline highlight types. Re-uses the existing TypeScript tooling infra in `*.ts`, `*.tsx`, `*.js`, and `*.jsx` files, simply adding inline info.
 
+The extension works with both the classic TypeScript language service and the TypeScript 7 language server.
+
 Useful for keyboard warriors or folks working on complex types and want to see how changes propagate throughout other types.
 
 ## Features

@@ -48,7 +48,7 @@ function registerInsertTwoSlashQueryCommand(context: vscode.ExtensionContext) {
               position: prevLine.range.start,
               lineLength: prevLine.text.length + 1,
             });
-            const position = hint?.body?.start.offset;
+            const position = hint?.start?.offset;
             if (position) {
               padding = position - 1;
               eolRange = prevLine.range.end;
