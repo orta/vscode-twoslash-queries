@@ -1,36 +1,63 @@
 import * as vscode from "vscode";
-import type { FileLocationRequestArgs, QuickInfoResponse } from "typescript/lib/protocol";
 
 export type Model = vscode.TextDocument;
 
-/** Leverages the `tsserver` protocol to try to get the type info at the given `position`. */
+export type QuickInfo = {
+  displayString: string;
+  start?: { offset: number };
+};
+
+/** Uses VS Code's language-agnostic hover API to get type info at the given `position`. */
 export async function quickInfoRequest(model: Model, position: vscode.Position) {
-  const { scheme, fsPath, authority, path } = model.uri;
-  return await vscode.commands.executeCommand<QuickInfoResponse | undefined>(
-    "typescript.tsserverRequest",
-    "quickinfo",
-    {
-      file: scheme === 'file' ? fsPath : `^/${scheme}/${authority || 'ts-nul-authority'}/${path.replace(/^\//, '')}`,
-      line: position.line + 1,
-      offset: position.character,
-    } satisfies FileLocationRequestArgs
+  const hovers = await vscode.commands.executeCommand<vscode.Hover[]>(
+    "vscode.executeHoverProvider",
+    model.uri,
+    position
   );
+
+  for (const hover of hovers || []) {
+    const displayString = getHoverDisplayString(hover.contents);
+    if (displayString) {
+      return {
+        displayString,
+        start: getHoverStart(hover),
+      } satisfies QuickInfo;
+    }
+  }
+}
+
+export function getHoverStart(hover: vscode.Hover): QuickInfo["start"] {
+  return hover.range ? { offset: hover.range.start.character + 1 } : undefined;
+}
+
+export function getHoverDisplayString(contents: readonly (vscode.MarkdownString | vscode.MarkedString)[]): string | undefined {
+  for (const content of contents) {
+    if (typeof content !== "string" && "language" in content) {
+      return content.value;
+    }
+
+    const markdown = typeof content === "string" ? content : content.value;
+    const codeBlock = /```(?:\w+)?\r?\n([\s\S]*?)\r?\n```/.exec(markdown);
+    if (codeBlock) {
+      return codeBlock[1];
+    }
+  }
 }
 
 type InlayHintInfo = {
-  hint: QuickInfoResponse | undefined;
+  hint: QuickInfo | undefined;
   position: vscode.Position;
   lineLength?: number;
 };
 
 /** Creates a `vscode.InlayHint` to display a `QuickInfo` response. */
 export function createInlayHint({ hint, position, lineLength = 0 }: InlayHintInfo): vscode.InlayHint | undefined {
-  if (!hint || !hint.body) {
+  if (!hint) {
     return;
   }
   
   // Make a one-liner
-  let text = hint.body.displayString
+  let text = hint.displayString
     .replace(/\r?\n\s*/g, " ")
     .replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
   
@@ -65,7 +92,7 @@ export async function getLeftMostHintOfLine({ model, position, lineLength }: Lin
   for (const i of range(lineLength)) {
     const hint = await quickInfoRequest(model, position.translate(0, i));
   
-    if (!hint || !hint.body) {
+    if (!hint) {
       continue;
     }
 
