@@ -20,10 +20,14 @@ export async function quickInfoRequest(model: Model, position: vscode.Position) 
     if (displayString) {
       return {
         displayString,
-        start: hover.range ? { offset: model.offsetAt(hover.range.start) } : undefined,
+        start: getHoverStart(hover),
       } satisfies QuickInfo;
     }
   }
+}
+
+export function getHoverStart(hover: vscode.Hover): QuickInfo["start"] {
+  return hover.range ? { offset: hover.range.start.character + 1 } : undefined;
 }
 
 export function getHoverDisplayString(contents: readonly (vscode.MarkdownString | vscode.MarkedString)[]): string | undefined {
